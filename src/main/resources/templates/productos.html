@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventario - SistemaBoutique</title>
+
+  <style>
+    /* Estilos generales de la pantalla de inventario. */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #F2EBD9;
+      color: #333333;
+    }
+
+    /* Encabezado principal de SistemaBoutique. */
+    header {
+      background-color: #4A1521;
+      color: white;
+      padding: 20px 40px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    header p {
+      margin: 5px 0 0;
+    }
+
+    /* Contenedor principal de la pantalla. */
+    main {
+      padding: 30px 40px;
+    }
+
+    /* Encabezado de la sección de inventario. */
+    .encabezado-inventario {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .encabezado-inventario h2 {
+      color: #4A1521;
+      margin: 0;
+    }
+
+    /* Botón para registrar un nuevo producto. */
+    .boton-nuevo {
+      background-color: #4A1521;
+      color: white;
+      text-decoration: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    /* Tabla principal del inventario. */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    th {
+      background-color: #E8D4C8;
+      color: #4A1521;
+      padding: 12px;
+      text-align: left;
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #dddddd;
+    }
+
+    /* Resalta visualmente los productos con stock bajo. */
+    .stock-bajo {
+      color: #B3261E;
+      font-weight: bold;
+    }
+
+    /* Espacio para las acciones de cada producto. */
+    .acciones a {
+      margin-right: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .editar {
+      color: #4A1521;
+    }
+
+    .eliminar {
+      color: #B3261E;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Encabezado de la aplicación. -->
+  <header>
+    <h1>SistemaBoutique</h1>
+    <p>Gestión de inventario</p>
+  </header>
+
+  <main>
+
+    <!-- Título y acción principal del inventario. -->
+    <div class="encabezado-inventario">
+      <h2>Inventario de productos</h2>
+
+      <a href="/productos/nuevo" class="boton-nuevo">
+        Nuevo producto
+      </a>
+    </div>
+
+    <!-- Tabla con los productos obtenidos desde la base de datos. -->
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Talla</th>
+          <th>Color</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Stock mínimo</th>
+          <th>Categoría</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <!-- Recorre los productos enviados por ProductoController. -->
+        <tr th:each="producto : ${productos}">
+
+          <td th:text="${producto.idProducto}"></td>
+
+          <td th:text="${producto.nombre}"></td>
+
+          <td th:text="${producto.descripcion}"></td>
+
+          <td th:text="${producto.talla}"></td>
+
+          <td th:text="${producto.color}"></td>
+
+          <td th:text="${producto.precio}"></td>
+
+          <!-- Marca el stock como bajo cuando llega al mínimo establecido. -->
+          <td
+            th:text="${producto.stock}"
+            th:classappend="${producto.stock <= producto.stockMinimo} ? 'stock-bajo' : ''">
+          </td>
+
+          <td th:text="${producto.stockMinimo}"></td>
+
+          <td th:text="${producto.idCategoria}"></td>
+
+          <!-- Las rutas de editar y eliminar las conectaremos después. -->
+          <td class="acciones">
+            <a
+              th:href="@{/productos/editar/{id}(id=${producto.idProducto})}"
+              class="editar">
+              Editar
+            </a>
+
+            <a
+              th:href="@{/productos/eliminar/{id}(id=${producto.idProducto})}"
+              class="eliminar">
+              Eliminar
+            </a>
+          </td>
+
+        </tr>
+
+      </tbody>
+    </table>
+
+  </main>
+
+</body>
+</html>
