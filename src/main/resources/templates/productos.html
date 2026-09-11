@@ -164,7 +164,7 @@
 
           <td th:text="${producto.idCategoria}"></td>
 
-          <!-- Las rutas de editar y eliminar las conectaremos después. -->
+          <!-- Acciones disponibles para cada producto. -->
           <td class="acciones">
             <a
               th:href="@{/productos/editar/{id}(id=${producto.idProducto})}"

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * Controlador encargado de gestionar las solicitudes relacionadas
@@ -63,6 +64,35 @@ public String mostrarFormulario(Model modelo) {
 @PostMapping("/productos/guardar")
 public String guardarProducto(Producto producto) {
   productoService.guardarProducto(producto);
+
+  return "redirect:/productos";
+}
+/**
+ * Muestra el formulario para editar un producto existente.
+ *
+ * @param idProducto identificador del producto que se desea editar
+ * @param modelo modelo utilizado para enviar el producto al formulario
+ * @return vista del formulario de producto
+ */
+@GetMapping("/productos/editar/{id}")
+public String editarProducto(
+    @PathVariable("id") Integer idProducto, Model modelo) {
+
+  Producto producto = productoService.buscarPorId(idProducto);
+  modelo.addAttribute("producto", producto);
+
+  return "producto-formulario";
+}
+
+/**
+ * Elimina un producto del inventario.
+ *
+ * @param idProducto identificador del producto que se desea eliminar
+ * @return redirecciona al listado de productos
+ */
+@GetMapping("/productos/eliminar/{id}")
+public String eliminarProducto(@PathVariable("id") Integer idProducto) {
+  productoService.eliminarProducto(idProducto);
 
   return "redirect:/productos";
 }

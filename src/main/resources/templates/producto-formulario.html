@@ -68,6 +68,7 @@
   
    <!-- Formulario para registrar un producto en el inventario -->
 <form action="/productos/guardar" method="post" th:object="${producto}">
+    <input type="hidden" th:field="*{idProducto}">
 
   <label for="nombre">Nombre</label>
   <input id="nombre" type="text" th:field="*{nombre}" required>
