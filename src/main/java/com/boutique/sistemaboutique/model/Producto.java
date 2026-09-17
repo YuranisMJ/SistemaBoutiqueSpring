@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
+import jakarta.validation.constraints.Size;
 
 /**
  * Entidad que representa un producto del inventario de SistemaBoutique.
@@ -35,6 +36,7 @@ public class Producto {
     /**
      * Descripción detallada del producto.
      */
+    @Size(max = 255, message = "La descripción no puede superar los 255 caracteres.")
     @Column(name = "descripcion", length = 255)
     private String descripcion;
 

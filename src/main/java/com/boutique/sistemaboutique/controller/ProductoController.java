@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
 
 /**
  * Controlador encargado de gestionar las solicitudes relacionadas
@@ -62,7 +64,13 @@ public String mostrarFormulario(Model modelo) {
  * @return redirección hacia el listado de productos
  */
 @PostMapping("/productos/guardar")
-public String guardarProducto(Producto producto) {
+public String guardarProducto(
+    @Valid Producto producto, BindingResult resultado) {
+
+  if (resultado.hasErrors()) {
+    return "producto-formulario";
+  }
+
   productoService.guardarProducto(producto);
 
   return "redirect:/productos";

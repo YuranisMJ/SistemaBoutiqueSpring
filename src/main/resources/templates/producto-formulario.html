@@ -74,7 +74,14 @@
   <input id="nombre" type="text" th:field="*{nombre}" required>
 
   <label for="descripcion">Descripción</label>
-  <input id="descripcion" type="text" th:field="*{descripcion}">
+  <input
+    id="descripcion"
+    type="text"
+    th:field="*{descripcion}">
+
+  <p th:if="${#fields.hasErrors('descripcion')}"
+     th:errors="*{descripcion}">
+  </p> 
 
   <label for="talla">Talla</label>
   <input id="talla" type="text" th:field="*{talla}" required>
