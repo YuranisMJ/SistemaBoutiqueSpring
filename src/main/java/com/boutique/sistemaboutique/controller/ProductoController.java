@@ -52,10 +52,9 @@ public class ProductoController {
  */
 @GetMapping("/productos/nuevo")
 public String mostrarFormulario(Model modelo) {
-
-  modelo.addAttribute("producto", new Producto());
-
-  return "producto-formulario";
+    modelo.addAttribute("producto", new Producto());
+    modelo.addAttribute("modoEdicion", false);
+    return "producto-formulario";
 }
 /**
  * Guarda un nuevo producto en el inventario.
@@ -86,10 +85,10 @@ public String guardarProducto(
 public String editarProducto(
     @PathVariable("id") Integer idProducto, Model modelo) {
 
-  Producto producto = productoService.buscarPorId(idProducto);
-  modelo.addAttribute("producto", producto);
-
-  return "producto-formulario";
+    Producto producto = productoService.buscarPorId(idProducto);
+    modelo.addAttribute("producto", producto);
+    modelo.addAttribute("modoEdicion", true);
+    return "producto-formulario";
 }
 
 /**

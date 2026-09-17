@@ -63,7 +63,9 @@
 
 <div class="contenedor">
 
-  <h2>Registrar producto</h2>
+  <h2 th:text="${modoEdicion} ? 'Editar producto' : 'Registrar producto'">
+  Registrar producto
+  </h2>
 
   
    <!-- Formulario para registrar un producto en el inventario -->
